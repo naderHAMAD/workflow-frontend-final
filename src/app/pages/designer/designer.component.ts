@@ -58,9 +58,24 @@ export class DesignerComponent implements OnInit {
       }
     });
     
-    this.load();
+    this.workflow = history.state.workflow;
+    this.isUpdate = history.state.isUpdate ?? false;
+
+    if (this.workflow) {
+      this.loadWorkflow();
+    } else {
+      this.createNewWorkflow();
+    }
   }
 
+  createNewWorkflow() {
+    this.modeler.createDiagram().then(() => {
+      this.zoomToFit();
+    }).catch((error) => {
+      console.error('Error creating diagram', error);
+    });
+  }
+  
   load(): void {
     this.getExample().subscribe(data => {
       this.modeler.importXML(data, value => this.handleError(value));
@@ -161,7 +176,7 @@ async loadWorkflow() {
   try {
     const workflow = await this.workflowService.getWorkflow(this.workflow.id).toPromise();
     const xml = workflow.xmlContent; // Assuming the XML content property name is xmlContent
-          await this.bpmnModeler.importXML(xml);
+          await this.modeler.importXML(xml);
     this.zoomToFit();
   } catch (err) {
     console.error(err);
@@ -216,8 +231,8 @@ async onUpdateClick(): Promise<void> {
 ngOnDestroy(): void {
   // Unsubscribe from all subscriptions to prevent memory leaks
   this.subscriptions.forEach(subscription => subscription.unsubscribe());
-  if (this.bpmnModeler) {
-    this.bpmnModeler.destroy();
+  if (this.modeler) {
+    this.modeler.destroy();
   }
   if (this.dialog.openDialogs.length) {
     this.dialog.closeAll();
@@ -225,9 +240,10 @@ ngOnDestroy(): void {
 }
 /////////////////////////////////////////////////
 onDownloadClick(): void {
-  this.bpmnModeler.saveXML({ format: true })
-    .then((result: SaveXMLResult) => {
-      const xml: string = result.xml; // Adjust this line based on the actual structure of SaveXMLResult
+  this.modeler.saveXML({ format: true }, (err: any, xml: string) => {
+    if (err) {
+      console.error(err);
+    } else {
       const blob = new Blob([xml], { type: 'application/xml' });
       const url = window.URL.createObjectURL(blob);
       const anchor = document.createElement('a');
@@ -235,11 +251,10 @@ onDownloadClick(): void {
       anchor.href = url;
       anchor.click();
       window.URL.revokeObjectURL(url);
-    })
-    .catch((err: any) => {
-      console.error(err);
-    });
+    }
+  });
 }
+
 
 
 }

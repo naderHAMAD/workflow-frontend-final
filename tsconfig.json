@@ -4,6 +4,8 @@
     "skipLibCheck": true,
 
     "baseUrl": "./",
+    "paths": {
+      "diagram-js/lib/model": ["node_modules/diagram-js/lib/model"]},
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,

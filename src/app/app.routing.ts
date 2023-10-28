@@ -23,9 +23,18 @@ import { ValidatorActiveTaskComponent } from './pages/validator/validator-active
 import { ValidatorProcessComponent } from './pages/validator/validator-process/validator-process.component';
 import { UnauthorizedComponent } from './pages/unauthorized/unauthorized.component';
 import { DesignerComponent } from './pages/designer/designer.component';
+import { Test1Component } from './test1/test1.component';
+import { Test2Component } from './test2/test2.component';
+import { Test3Component } from './test3/test3.component';
 
 
 const routes: Routes = [
+
+  { path: 'test1', component: Test1Component },
+  { path: 'test2', component: Test2Component },
+
+  { path: 'test3', component: Test3Component },
+
   {
     path: '',
     redirectTo: '/login',

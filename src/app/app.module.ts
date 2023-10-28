@@ -41,6 +41,9 @@ import { DesignerComponent } from './pages/designer/designer.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ComponentsModule } from './components/components.module';
+import { Test1Component } from './test1/test1.component';
+import { Test2Component } from './test2/test2.component';
+import { Test3Component } from './test3/test3.component';
 
 
 @NgModule({
@@ -82,6 +85,9 @@ import { ComponentsModule } from './components/components.module';
     DialogHistoryTaskComponent,
     UnauthorizedComponent,
     DesignerComponent,
+    Test1Component,
+    Test2Component,
+    Test3Component,
   ],
   providers: [],
   bootstrap: [AppComponent]
