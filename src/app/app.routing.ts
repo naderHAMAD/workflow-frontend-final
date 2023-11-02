@@ -69,6 +69,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
+    canActivate: [AdminGuard],
     children: [
       { path: 'form-editor', component: FormEditorComponent },
       { path: 'process', component: ProcessComponent },
@@ -88,6 +89,7 @@ const routes: Routes = [
   {
     path: '',
     component: SimpleUserLayoutComponent,
+    canActivate: [UserGuard],
     children: [
       { path: 'simple-user-active-task', component: SimpleUserActiveTaskComponent },
       {
@@ -99,6 +101,7 @@ const routes: Routes = [
   {
     path: '',
     component: ValidatorLayoutComponent,
+    canActivate: [ValidatorGuard],
     children: [
       { path: 'validator-active-task', component: ValidatorActiveTaskComponent },
       { path: 'validator-process', component: ValidatorProcessComponent },

@@ -27,5 +27,6 @@ export class WorkflowService {
   getWorkflow(id: string): Observable<Workflow> {
     return this.http.get<Workflow>(`${this.apiUrl}/get/bpmn/${id}`);
   }
+  
 
 }
